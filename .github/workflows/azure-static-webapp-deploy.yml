@@ -36,7 +36,7 @@ jobs:
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - name: Install dependencies packages
-        run: pnpm --filter @photo-sharing/client install --frozen-lockfile
+        run: pnpm --filter @photo-sharing/client install
 
       - name: ClientWebapp Build
         run: pnpm --filter @photo-sharing/client build
