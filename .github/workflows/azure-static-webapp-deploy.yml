@@ -44,6 +44,10 @@ jobs:
 
       - name: Copy `staticwebapp.config.json` to dist folder
         run: cp apps/client/staticwebapp.config.json apps/client/dist/staticwebapp.config.json
+      
+      - name: Check Azure Static Web Apps API Token
+        run: |
+          echo "Azure Static Web Apps API Token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}"
 
       - name: Deploy
         id: builddeploy
