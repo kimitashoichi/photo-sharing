@@ -1,0 +1,57 @@
+name: Deploy Client Web App
+
+on:
+  workflow_dispatch:
+
+env:
+  VITE_API_BASE_URL: "/"
+  BUILD_MODE: production
+
+jobs:
+  build_and_deploy_job:
+    runs-on: ubuntu-latest
+
+    name: Build and Deploy Job
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.6.6
+          run_install: false
+      
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          cache: "pnpm"
+      
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Install dependencies packages
+        run: pnpm --filter @photo-sharing/client install --frozen-lockfile
+
+      - name: ClientWebapp Build
+        run: pnpm --filter @photo-sharing/client build
+
+      - name: Copy `staticwebapp.config.json` to dist folder
+        run: cp apps/client/staticwebapp.config.json apps/client/dist/staticwebapp.config.json
+
+      - name: Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "apps/client/dist"
+          skip_app_build: true
+          api_location: ""
+          skip_api_build: true
