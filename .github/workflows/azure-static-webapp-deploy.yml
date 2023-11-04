@@ -6,6 +6,7 @@ on:
 env:
   VITE_API_BASE_URL: "/"
   BUILD_MODE: production
+  environment: prod
 
 jobs:
   build_and_deploy_job:
