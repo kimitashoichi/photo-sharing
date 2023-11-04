@@ -1,0 +1,14 @@
+# キャッシュファイルや依存関係を無視
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# 環境設定ファイルを無視
+.env
+
+# ローカルの設定ファイル（例：VSCode設定ファイル）を無視
+.vscode/
+
+# ビルド済みファイルを無視
+/build/
+/dist/
