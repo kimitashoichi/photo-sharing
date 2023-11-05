@@ -1,7 +1,8 @@
-import { Hono } from 'https://deno.land/x/hono@v3.9.2/mod.ts'
+import { Hono } from 'hono';
+import { serve } from '@hono/node-server'
 
 const app = new Hono()
 
 app.get('/', (c) => c.text('Hello Hono!'))
 
-Deno.serve(app.fetch)
+serve({ fetch: app.fetch, port: 4001 })
