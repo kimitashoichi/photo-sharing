@@ -15,6 +15,7 @@ WORKDIR /app
 COPY ./ /app/
 RUN pnpm install
 # RUN pnpm -F @toggle-sketch/orm exec prisma generate schema.prisma
+RUN pnpm add -g rimraf
 
 # deploy app
 RUN pnpm -F @photo-sharing/server build
