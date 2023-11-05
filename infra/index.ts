@@ -2,6 +2,7 @@ import * as pulumi from "@pulumi/pulumi";
 import * as resources from "@pulumi/azure-native/resources";
 import * as storage from "@pulumi/azure-native/storage";
 import * as azure_native from "@pulumi/azure-native";
+import * as containerRegistry from "@pulumi/azure-native/containerregistry";
 
 // Create an Azure Resource Group
 const resourceGroup = new resources.ResourceGroup("photo_sharing");
@@ -57,6 +58,16 @@ const appServer = new azure_native.web.WebApp('psApiWebApp', {
     siteConfig: {
         ftpsState: "Disabled",
     },
+});
+
+const appContainerRegistry = new containerRegistry.Registry('photoSharingContainerRegistry', {
+    registryName: 'photoSharingContainerRegistry',
+    resourceGroupName: resourceGroup.name,
+    sku: {
+        name: "Basic",
+    },
+    adminUserEnabled: true,
+    location: "Japan East",
 });
 
 export const primaryStorageKey = storageAccountKeys.keys[0].value;
