@@ -18,6 +18,7 @@ RUN pnpm install
 
 # TODO: ここは修正する
 RUN pnpm add -g rimraf
+
 RUN pnpm add -g esbuild
 
 # deploy app
